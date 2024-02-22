@@ -1,0 +1,22 @@
+#!python3
+
+import sys
+from urllib.parse import urlparse
+
+def unique_domains(urls):
+    domains = set()
+    for url in urls:
+        try:
+            domain = urlparse(url.strip()).netloc
+            if domain:  # Ensure it's not empty
+                domains.add(domain)
+        except Exception as e:
+            print(f"Error processing URL '{url}': {e}", file=sys.stderr)
+    return domains
+
+if __name__ == "__main__":
+    urls = sys.stdin.readlines()
+    unique = unique_domains(urls)
+    for domain in sorted(unique):
+        print(domain)
+
